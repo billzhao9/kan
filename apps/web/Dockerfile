@@ -2,6 +2,16 @@ ARG NODE_VERSION=20
 ARG APP_DIRNAME=web
 ARG PROJECT=@kan/web
 
+
+FROM node:22-slim
+LABEL "language"="nodejs"
+WORKDIR /src
+
+# Install Mint (documentation tool)
+RUN apt-get update && apt-get install -y curl && \
+    curl -fsSL https://install.mintlify.com | bash && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # 1. Alpine image
 FROM node:${NODE_VERSION}-alpine AS alpine
 RUN apk update
